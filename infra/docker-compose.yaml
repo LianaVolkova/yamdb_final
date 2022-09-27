@@ -8,7 +8,7 @@ services:
     env_file:
       - ./.env
   web:
-    build: volkovaliana/yamdb_final
+    image: volkovaliana/yamdb_final:latest
     restart: always
     volumes:
       - static_value:/app/static/
