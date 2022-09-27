@@ -2,21 +2,16 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
-
 from rest_framework import status, viewsets
 from rest_framework.decorators import action, api_view
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-
 from rest_framework_simplejwt.tokens import AccessToken
 
 from .permissions import AdminOrSuperUser
-from .serializers import (UserSelfSerializer,
-                          UserSerializer,
-                          UserSignUpSerializer,
-                          UserTokenSerializer
-                          )
+from .serializers import (UserSelfSerializer, UserSerializer,
+                          UserSignUpSerializer, UserTokenSerializer)
 from .services import check_token, generate_token
 
 User = get_user_model()
@@ -64,6 +59,7 @@ def retrieve_token(request):
             },
             status=status.HTTP_400_BAD_REQUEST
         )
+    return Response(serializer.errors)
 
 
 class UsersViewSet(viewsets.ModelViewSet):

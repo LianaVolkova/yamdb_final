@@ -79,10 +79,10 @@ sudo apt install docker.io
 
 или воспользоваться официальной [инструкцией](https://docs.docker.com/compose/install/)
 
-Находясь локально в директории infra/, скопировать файлы docker-compose.yml и nginx.conf на удаленный сервер:
+Находясь локально в директории infra/, скопировать файлы docker-compose.yaml и nginx.conf на удаленный сервер:
 
 ```bash
-scp docker-compose.yml <username>@<host>:/home/<username>/
+scp docker-compose.yaml <username>@<host>:/home/<username>/
 scp -r nginx/ <username>@<host>:/home/<username>/
 ```
 
