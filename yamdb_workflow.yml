@@ -56,11 +56,9 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
         key: ${{ secrets.SSH_KEY }}        
-        script: |
-          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/yamdb_final:latest
+        script: |          
           sudo docker-compose stop
-          sudo docker-compose rm web
-          sudo rm .env
+          sudo docker-compose rm web          
           touch .env
           echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
           echo POSTGRES_ENGINE=${{ secrets.POSTGRES_ENGINE }} >> .env
