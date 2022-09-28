@@ -73,7 +73,7 @@ sudo apt install docker.io
 
 ``` bash
     sudo apt-get update
-    sudo apt-get install docker-compose-plagin
+    sudo apt-get install docker-compose-plugin
     sudo apt install docker-compose     
 ```
 
