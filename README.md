@@ -2,11 +2,13 @@
 
 ![ci/cd_api_yamdb workflow](https://github.com/LianaVolkova/yamdb_final/actions/workflows/yamdb_workflow.yml/badge.svg)
 
-## Описание проекта
-
-CI/CD API сервиса YaMDb. Workflow подразумевает автоматический запуск тестов, обновление образа проекта на DockerHub, автоматический деплой на боевой сервер и запуск сервиса, отправку уведомления об успешном завершении workflow в Телеграм при выполнении команды push.
+## Описание проекта API Yamdb
 
 Проект YaMDb собирает отзывы пользователей на произведения. Произведения делятся на категории: "Категории", "Фильмы", "Музыка". Список категорий (Category) может быть расширен администратором. Сами произведения в YaMDb не хранятся, здесь нельзя посмотреть фильм или послушать музыку. Произведению может быть присвоен жанр из списка предустановленных. Новые жанры может создавать только администратор. Пользователи оставляют к произведениям текстовые отзывы (Review) и ставят произведению оценку в диапазоне от одного до десяти (целое число); из пользовательских оценок формируется усреднённая оценка произведения — рейтинг (целое число). На одно произведение пользователь может оставить только один отзыв.
+
+## CI/CD
+
+Настроен автоматический запуск тестов, обновление образа проекта на DockerHub, автоматический деплой на боевой сервер и запуск сервиса, отправка уведомления об успешном завершении workflow в Телеграм при выполнении команды push.
 
 ### Документация к API доступна по адресу [http://51.250.66.173/redoc/](http://51.250.66.173/redoc/) после запуска проекта
 
@@ -46,35 +48,36 @@ CI/CD API сервиса YaMDb. Workflow подразумевает автома
 
 Склонировать репозиторий:  
 
-```
+```bash
 git clone <название репозитория>
 ```
 
 Перейти в директорию infra:  
 
-```
+```bash
 cd yamdb_final/infra/
 ```  
 
 Создать файл .env по шаблону:  
 
-```
+```bash
 cp .env.example .env
 ```  
 
 Выполнить вход на удаленный сервер
+
 Установить docker:  
 
-```
+``` bash
 sudo apt install docker.io
 ```
 
 Установить docker-compose:
 
 ``` bash
-    sudo apt-get update
-    sudo apt-get install docker-compose-plugin
-    sudo apt install docker-compose     
+sudo apt-get update
+sudo apt-get install docker-compose-plugin
+sudo apt install docker-compose
 ```
 
 или воспользоваться официальной [инструкцией](https://docs.docker.com/compose/install/)
@@ -93,14 +96,12 @@ scp -r nginx/ <username>@<host>:/home/<username>/
 
 DOCKER_USERNAME=<имя пользователя DockerHub>
 DOCKER_PASSWORD=<пароль от DockerHub>
-
 USER=<username для подключения к удаленному серверу>
 HOST=<ip сервера>
 PASSPHRASE=<пароль для сервера, если он установлен>
-SSH_KEY=<ваш приватный SSH-ключ (для получения команда: cat ~/.ssh/id_rsa)>
-
+SSH_KEY=<ваш приватный SSH-ключ>
 TELEGRAM_TO=<id вашего Телеграм-аккаунта>
-TELEGRAM_TOKEN=<токен вашего бота>
+TELEGRAM_TOKEN=<токен вашего Телеграм-бота>
 ```
 
 ## Workflow проекта
@@ -115,19 +116,19 @@ TELEGRAM_TOKEN=<токен вашего бота>
 
 Применить миграции:  
 
-```
+```bash
 sudo docker-compose exec web python manage.py migrate
 ```
 
 Создать суперпользователя:  
 
-```
+```bash
 sudo docker-compose exec web python manage.py createsuperuser
 ```
 
 Загрузить тестовые данные:  
 
-```
+```bash
 sudo docker-compose exec web python manage.py loaddata fixtures.json
 ```
 
@@ -135,43 +136,43 @@ sudo docker-compose exec web python manage.py loaddata fixtures.json
 
 Регистрация пользователя:
 
-```
+```bash
 POST /api/v1/auth/signup/
 ```  
 
 Получение данных своей учетной записи:
 
-```
+```bash
 GET /api/v1/users/me/
 ```  
 
 Добавление новой категории:
 
-```
+```bash
 POST /api/v1/categories/
 ```  
 
 Удаление жанра:
 
-```
+```bash
 DELETE /api/v1/genres/{slug}
 ```  
 
 Частичное обновление информации о произведении:
 
-```
+```bash
 PATCH /api/v1/titles/{titles_id}
 ```  
 
 Получение списка всех отзывов:
 
-```
+```bash
 GET /api/v1/titles/{title_id}/reviews/
 ```  
 
 Добавление комментария к отзыву:
 
-```
+```bash
 POST /api/v1/titles/{title_id}/reviews/{review_id}/comments/
 ```
 
